@@ -23,8 +23,9 @@ namespace Chatbot_API.Services
         {
             //if (request.UserType == "DSSC") request.UserId = 2;
 
+            //var dateNow = DateTime.Parse(request.TimeStampString);
+            var dateNow = DateTime.Now;
             var checkMessage = _dbContext.CHAT_HISTORIE.Any(s => s.USER_ID == 2 && !s.IS_COMPLTE);
-            var dateNow = DateTime.Parse(request.TimeStampString);
 
             bool isFirstMessage = false;
             if (!checkMessage && request.UserType == "DEALER")
@@ -63,16 +64,23 @@ namespace Chatbot_API.Services
                 {
                     if (request.Message == "DSSC")
                     {
+                        response.Lists.Add(new MessageResponseDetails() { Message = "DSSC สวัสดีค่ะ", Type = request.Type, TimeStamp = dateNow });
                         response.Lists.Add(new MessageResponseDetails() { Topic = { "สอบถามสถานะ Quotation", "ติดต่อเจ้าหน้าที่" }, ButtonId = 1, Type = request.Type, TimeStamp = dateNow });
                     }
                     else if (request.Message == "SCG_PARTNER")
                     {
+                        response.Lists.Add(new MessageResponseDetails() { Message = "SCG_PARTNER สวัสดีค่ะ", Type = request.Type, TimeStamp = dateNow });
                         response.Lists.Add(new MessageResponseDetails() { Topic = { "สอบถามสถานะ SCG_PARTNER", "ติดต่อเจ้าหน้าที่" }, ButtonId = 1, Type = request.Type, TimeStamp = dateNow });
 
                     }
                     else if (request.Message == "ติดต่อเจ้าหน้าที่")
                     {
                         response.Lists.Add(new MessageResponseDetails() { Message = "CASE 123", ButtonId = 2, Type = request.Type, TimeStamp = dateNow });
+                    }
+                    else if (request.Message == "สอบถามสถานะ Quotation")
+                    {
+                        response.Lists.Add(new MessageResponseDetails() { Message = "กรุณากรอก Quotation Number ค่ะ", Type = request.Type, TimeStamp = dateNow });
+
                     }
                 }
             }
