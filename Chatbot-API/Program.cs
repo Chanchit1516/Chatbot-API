@@ -14,10 +14,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<ApplicationDbContext>(item => item.UseSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase")));
-
-
-
+builder.Services.AddDbContext<ApplicationDbContext>(item => item.UseNpgsql(builder.Configuration.GetConnectionString("DefaultDatabase")));
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 builder.Services.AddSignalR();
 builder.Services.AddAutoMapper(typeof(Program));
